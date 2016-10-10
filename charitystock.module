@@ -1,0 +1,69 @@
+<?php
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Queue\QueueFactory;
+use Drupal\Core\Queue\QueueInterface;
+
+
+/**
+ * Implements hook_entity_insert().
+ */
+function charitystock_entity_insert(EntityInterface $entity) {
+
+  if ($entity->getEntityTypeId() !== 'node') {
+    return;
+  }
+
+  // Check that the content type is 'scan'
+  if( $entity->bundle() !== 'scan' ){
+    return;
+  }
+
+  /** @var QueueFactory $queue_factory */
+  $queue_factory = \Drupal::service('queue');
+  /** @var QueueInterface $queue */
+  $queue = $queue_factory->get('manual_charitystock');
+  $item = new \stdClass();
+  $item->nid = $entity->id();
+  $queue->createItem($item);
+}
+
+
+/**
+ * Implements hook_node_presave().
+ *
+ * 
+ */
+function charitystock_node_presave(EntityInterface $node) {
+
+  // If this node is not custom content type 'stock_item' we're not interested 
+  if( $node->bundle() !== 'stock_item' ){
+    return;
+  }
+
+  $stockItemTitle = '';
+  
+  $bookEntityVals = $node->get('field_stock_item_book')
+                          ->first()
+                          ->get('entity')
+                          ->getTarget()
+                          ->getValue();
+
+  $stockItemTitle = $bookEntityVals->getTitle();
+
+  $stockItemTitle .= ' by ';
+
+  $stockItemTitle .= $bookEntityVals->field_book_author_name->value;
+
+  $stockItemTitle .= ' at ';
+
+  $stockItemTitle .= $node->get('field_stock_item_shop')
+                  ->first()
+                  ->get('entity')
+                  ->getTarget()
+                  ->getValue()
+                  ->getTitle();
+
+  $node->title = $stockItemTitle;
+
+}

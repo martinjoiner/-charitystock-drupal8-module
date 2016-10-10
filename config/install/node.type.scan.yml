@@ -1,0 +1,14 @@
+#node.type.charity.yml
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - charitystock
+name: 'Scan'
+type: scan
+description: 'A record of a barcode being scanned.'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true

@@ -1,0 +1,14 @@
+# 
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - charitystock
+name: 'Stock Item'
+type: stock_item
+description: 'An actual physical copy of a book sitting on the shelf of a shop'
+help: ''
+new_revision: false
+preview_mode: 0
+display_submitted: true

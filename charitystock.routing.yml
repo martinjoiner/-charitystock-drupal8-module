@@ -1,0 +1,27 @@
+
+charitystock.content:
+  path: '/charitystock'
+  defaults:
+    _controller: '\Drupal\charitystock\Controller\CharityStockController::content'
+    _title: 'CharityStock'
+  requirements:
+    _permission: 'access content'
+
+
+# charitystock.hook_cron:
+#   path: '/charitystock-hook-cron'
+#   defaults:
+#     _controller: '\Drupal\charitystock\Controller\CharityStockController::hook_cron'
+#     _title: 'ISBN Sightings Hook Cron'
+#   requirements:
+#     _permission: 'access content'
+
+
+charitystock.scan_queue_form:
+  path: '/scan-queue'
+  defaults:
+    _form: '\Drupal\charitystock\Form\ScanQueueForm'
+    _title: 'Scan Queue'
+  requirements:
+    _permission: 'administer site configuration'
+

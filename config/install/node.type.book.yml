@@ -1,0 +1,14 @@
+# 
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - charitystock
+name: Book
+type: book
+description: 'This is an ISBN record representing a publication (not a physical copy of a book). Storing these saves us having to make unnecessary hits to an external API'
+help: ''
+new_revision: false
+preview_mode: 0
+display_submitted: true

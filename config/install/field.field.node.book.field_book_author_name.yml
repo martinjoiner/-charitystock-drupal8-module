@@ -1,0 +1,18 @@
+# 
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.book
+id: node.book.field_book_author_name
+field_name: field_book_author_name
+entity_type: node
+bundle: book
+label: 'Author Name'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
