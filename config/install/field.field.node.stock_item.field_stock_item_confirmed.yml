@@ -1,0 +1,24 @@
+# 
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_stock_item_confirmed
+    - node.type.stock_item
+  module:
+    - datetime
+id: node.stock_item.field_stock_item_confirmed
+field_name: field_stock_item_confirmed
+entity_type: node
+bundle: stock_item
+label: 'Confirmed in stock'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+default_value_callback: ''
+settings: {  }
+field_type: datetime

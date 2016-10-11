@@ -10,9 +10,9 @@ namespace Drupal\charitystock\Plugin\QueueWorker;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
+use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 
 /**
  * Provides base functionality for the NodePublish Queue Workers.
@@ -69,12 +69,21 @@ abstract class CharityStockBase extends QueueWorkerBase implements ContainerFact
     /** @var NodeInterface $node */
     $node = $this->nodeStorage->load($data->nid);
 
+    // Get the user who created this scan (author)
+    $ownerID = $node->get('uid')->getValue()[0]['target_id'];
 
-    $shopID = $node->get('field_scan_shop')->first()
-                          ->get('entity')
-                          ->getTarget()
-                          ->getValue()
-                          ->id(); 
+    // Get the shop associated with this user
+    $query = \Drupal::entityQuery('node')
+                        ->condition('type', 'shop')
+                        ->condition('field_shop_user.target_id', $ownerID, '=');
+
+    $nids = $query->execute();
+
+    $shopID = reset($nids);
+
+    // Associate this scan with the shop
+    $node->field_scan_shop->target_id = $shopID;
+    $node->save();
 
     $barcode = $node->getTitle();
 
@@ -107,20 +116,34 @@ abstract class CharityStockBase extends QueueWorkerBase implements ContainerFact
 
     $nids = $query->execute();
 
+    // Generate a current date 
+    $curDateTime = new \Drupal\Core\Datetime\DrupalDateTime();
+    $curDateTime->setTimezone( $node->getOwner()->getTimezone() );
+
     if( count($nids) ){
 
       $stockItemID = reset($nids);
 
       $stockItemNode = entity_load('node', $stockItemID );
 
-      // TODO: Change the last updated date to now
-      //$stockItemNode->
+      // Set the confirmed date to now
+      $stockItemNode->field_stock_item_confirmed = $curDateTime->format(DATETIME_DATETIME_STORAGE_FORMAT);
 
     } else {
 
-      // TODO: Create new stock item 
+      // Create new stock item 
+      $values = array(
+        'field_stock_item_book' => $bookID,
+        'field_stock_item_shop' => $shopID,
+        'field_stock_item_confirmed' => $curDateTime->format(DATETIME_DATETIME_STORAGE_FORMAT),
+        'type' => 'stock_item'
+      );
+
+      $stockItemNode = Node::create($values);
 
     }
+
+    $stockItemNode->save();
 
     if (!$node->isPublished() && $node instanceof NodeInterface) {
 

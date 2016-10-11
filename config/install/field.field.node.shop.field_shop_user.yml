@@ -1,0 +1,27 @@
+# 
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.shop
+id: node.shop.field_shop_user
+field_name: field_shop_user
+entity_type: node
+bundle: shop
+label: User
+description: 'Scans by this user will be associated with this shop'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings:
+    include_anonymous: true
+    filter:
+      type: _none
+    target_bundles: null
+    sort:
+      field: _none
+    auto_create: false
+field_type: entity_reference

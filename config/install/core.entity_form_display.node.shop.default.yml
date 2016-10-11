@@ -4,10 +4,10 @@ status: true
 dependencies:
   config:
     - field.field.node.shop.field_shop_charity
+    - field.field.node.shop.field_shop_user
     - node.type.shop
   module:
     - path
-    - text
 id: node.shop.default
 targetEntityType: node
 bundle: shop
@@ -28,6 +28,14 @@ content:
     third_party_settings: {  }
   field_shop_charity:
     weight: 32
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+  field_shop_user:
+    weight: 33
     settings:
       match_operator: CONTAINS
       size: 60

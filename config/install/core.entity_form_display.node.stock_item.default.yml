@@ -4,9 +4,11 @@ status: true
 dependencies:
   config:
     - field.field.node.stock_item.field_stock_item_book
+    - field.field.node.stock_item.field_stock_item_confirmed
     - field.field.node.stock_item.field_stock_item_shop
     - node.type.stock_item
   module:
+    - datetime
     - path
 id: node.stock_item.default
 targetEntityType: node
@@ -26,6 +28,11 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: entity_reference_autocomplete
+  field_stock_item_confirmed:
+    weight: 33
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
   field_stock_item_shop:
     weight: 32
     settings:
@@ -59,4 +66,5 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  title: true
