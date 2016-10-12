@@ -25,3 +25,12 @@ charitystock.scan_queue_form:
   requirements:
     _permission: 'administer site configuration'
 
+
+charitystock.settings_form:
+  path: '/admin/config/development/charitystock'
+  defaults:
+    _form: '\Drupal\charitystock\Form\SettingsForm'
+    _title: 'CharityStock Settings'
+  requirements:
+    _permission: 'administer site configuration'
+

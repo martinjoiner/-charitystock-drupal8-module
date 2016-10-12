@@ -57,8 +57,10 @@ abstract class CharityStockBase extends QueueWorkerBase implements ContainerFact
    */
   protected function queryISBNdbAPI( $isbn ) {
 
+    $config = \Drupal::config('charitystock.settings');
+
     // Lookup ISBN on API 
-    $apiurl = 'http://isbndb.com/api/v2/json/WP2RLXAU/book/' . $isbn;
+    $apiurl = 'http://isbndb.com/api/v2/json/' . $config->get('isbndb_api_key') . '/book/' . $isbn;
 
     // Get and parse the JSON
     $json = file_get_contents($apiurl);
@@ -149,6 +151,7 @@ abstract class CharityStockBase extends QueueWorkerBase implements ContainerFact
 
       // Create new stock item 
       $values = array(
+        'uid' => $ownerID,
         'field_stock_item_book' => $bookID,
         'field_stock_item_shop' => $shopID,
         'field_stock_item_confirmed' => $curDateTime->format(DATETIME_DATETIME_STORAGE_FORMAT),

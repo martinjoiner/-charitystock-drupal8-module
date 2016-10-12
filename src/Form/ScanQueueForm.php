@@ -52,7 +52,7 @@ class ScanQueueForm extends FormBase {
   
 
   /**
-   * {@inheritdoc}.
+   * {@inheritdoc}
    */
   public function getFormId() {
     return 'charitystock_scan_queue_form';
@@ -60,7 +60,7 @@ class ScanQueueForm extends FormBase {
   
 
   /**
-   * {@inheritdoc}.
+   * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
 
