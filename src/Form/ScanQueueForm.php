@@ -92,7 +92,7 @@ class ScanQueueForm extends FormBase {
 
     /** @var QueueWorkerInterface $queue_worker */
     $queue_worker = $this->queueManager->createInstance('manual_charitystock');
-
+    
     while($item = $queue->claimItem()) {
       try {
         $queue_worker->processItem($item->data);

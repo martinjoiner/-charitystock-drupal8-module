@@ -50,14 +50,34 @@ abstract class CharityStockBase extends QueueWorkerBase implements ContainerFact
 
 
   /**
-   * Publishes a node.
+   * Queries API and creates a node of type 'book'.
    *
-   * @param NodeInterface $node
-   * @return int
+   * @param {number} $isbn
+   * @return int The ID of the newly created node 
    */
-  protected function publishNode($node) {
-    $node->setPublished(TRUE);
-    return $node->save();
+  protected function queryISBNdbAPI( $isbn ) {
+
+    // Lookup ISBN on API 
+    $apiurl = 'http://isbndb.com/api/v2/json/WP2RLXAU/book/' . $isbn;
+
+    // Get and parse the JSON
+    $json = file_get_contents($apiurl);
+    $vals = json_decode($json);
+
+    $book = $vals->data[0];
+
+    // Create an entry in the Book table
+    $bookVals = array(
+      'title' => $book->title,
+      'field_book_author_name' => $book->author_data[0]->name,
+      'field_book_isbn' => $book->isbn13,
+      'type' => 'book'
+    );
+
+    $bookNode = Node::create($bookVals);
+    $bookNode->save();
+
+    return $bookNode->nid->value;
   }
 
 
@@ -97,16 +117,12 @@ abstract class CharityStockBase extends QueueWorkerBase implements ContainerFact
     if( count($nids) ){
 
       $bookID = reset($nids);
-      $bookNode = entity_load('node', $bookID );
 
     } else {
 
-      // TODO: Lookup ISBN on API 
-
-      // TODO: Create an entry in the Book table
+      $bookID = $this->queryISBNdbAPI($barcode);
 
     }
-
 
     // Check if a Stock Item exists for this Book in this Shop
     $query = \Drupal::entityQuery('node')
@@ -145,10 +161,6 @@ abstract class CharityStockBase extends QueueWorkerBase implements ContainerFact
 
     $stockItemNode->save();
 
-    if (!$node->isPublished() && $node instanceof NodeInterface) {
-
-      return $this->publishNode($node);
-    }
   }
 
 }

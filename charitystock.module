@@ -58,11 +58,11 @@ function charitystock_node_presave(EntityInterface $node) {
   $stockItemTitle .= ' at ';
 
   $stockItemTitle .= $node->get('field_stock_item_shop')
-                  ->first()
-                  ->get('entity')
-                  ->getTarget()
-                  ->getValue()
-                  ->getTitle();
+                          ->first()
+                          ->get('entity')
+                          ->getTarget()
+                          ->getValue()
+                          ->getTitle();
 
   $node->title = $stockItemTitle;
 
