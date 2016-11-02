@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.node.shop.field_shop_charity
+    - field.field.node.shop.field_shop_code
     - field.field.node.shop.field_shop_user
     - node.type.shop
   module:
@@ -34,6 +35,13 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: entity_reference_autocomplete
+  field_shop_code:
+    weight: 34
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
   field_shop_user:
     weight: 33
     settings:

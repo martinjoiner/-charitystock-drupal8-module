@@ -91,13 +91,13 @@ abstract class CharityStockBase extends QueueWorkerBase implements ContainerFact
     /** @var NodeInterface $node */
     $node = $this->nodeStorage->load($data->nid);
 
-    // Get the user who created this scan (author)
-    $ownerID = $node->get('uid')->getValue()[0]['target_id'];
+    // Get the shop code recorded with this scan
+    $shop_code = $node->field_scan_shop_code->getValue()[0]['value'];
 
     // Get the shop associated with this user
     $query = \Drupal::entityQuery('node')
                         ->condition('type', 'shop')
-                        ->condition('field_shop_user.target_id', $ownerID, '=');
+                        ->condition('field_shop_code', $shop_code, '=');
 
     $nids = $query->execute();
 
@@ -148,6 +148,9 @@ abstract class CharityStockBase extends QueueWorkerBase implements ContainerFact
       $stockItemNode->field_stock_item_confirmed = $curDateTime->format(DATETIME_DATETIME_STORAGE_FORMAT);
 
     } else {
+
+      // Get the user who created this scan (author)
+      $ownerID = $node->get('uid')->getValue()[0]['target_id'];
 
       // Create new stock item 
       $values = array(
