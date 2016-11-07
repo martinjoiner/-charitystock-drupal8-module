@@ -3,7 +3,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_stock_item_confirmed
     - node.type.stock_item
   module:
     - datetime

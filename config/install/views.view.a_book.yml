@@ -5,7 +5,6 @@ dependencies:
     module:
       - charitystock
   config:
-    - field.storage.node.field_book_isbn
     - node.type.book
   module:
     - node
