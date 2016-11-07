@@ -1,8 +1,9 @@
-# 
+#
 langcode: en
 status: true
 dependencies:
   config:
+    - field.storage.node.field_book_author_name
     - node.type.book
 id: node.book.field_book_author_name
 field_name: field_book_author_name

@@ -1,8 +1,9 @@
-# 
+#
 langcode: en
 status: true
 dependencies:
   config:
+    - field.storage.node.field_shop_charity
     - node.type.charity
     - node.type.shop
 id: node.shop.field_shop_charity

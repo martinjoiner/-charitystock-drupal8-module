@@ -1,7 +1,9 @@
+#
 langcode: en
 status: true
 dependencies:
   config:
+    - field.storage.node.field_stock_item_shop
     - node.type.stock_item
 id: node.stock_item.field_stock_item_shop
 field_name: field_stock_item_shop
