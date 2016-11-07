@@ -5,7 +5,7 @@ dependencies:
   enforced:
     module:
       - charitystock
-name: 'Scan'
+name: Scan
 type: scan
 description: 'A record of a barcode being scanned.'
 help: ''

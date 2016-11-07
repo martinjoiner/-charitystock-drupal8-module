@@ -5,7 +5,7 @@ dependencies:
   enforced:
     module:
       - charitystock
-name: 'Charity'
+name: Charity
 type: charity
 description: 'A chain of shops with many locations.'
 help: ''
