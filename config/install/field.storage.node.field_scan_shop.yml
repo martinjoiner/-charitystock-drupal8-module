@@ -2,6 +2,9 @@
 langcode: en
 status: true
 dependencies:
+  enforced:
+    module:
+      - charitystock
   module:
     - node
 id: node.field_scan_shop
